@@ -1,0 +1,24 @@
+{
+  "name": "node_react_express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkumary/node_react_express.git"
+  },
+  "keywords": [],
+  "author": "Manoj Yadav <manoj10690@gmail.com> (http://brentertz.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mkumary/node_react_express/issues"
+  },
+  "homepage": "https://github.com/mkumary/node_react_express#readme",
+  "dependencies": {
+    "axios": "^0.15.3",
+    "express": "^4.14.0"
+  }
+}
