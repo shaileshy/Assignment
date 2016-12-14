@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        ul{
+           list-style-type: none;
+        }
+        ul li{
+        border: solid .5px navy;
+        background: aliceblue;
+        padding: 6px;
+        }
+        ul li a{
+            text-decoration: none;
+            color: darkgreen;
+        }
+        ul li a:visited{
+            color: yellowgreen;
+        }
+    </style>
+</head>
+<body>
+<div style="display:inline;float:left;">
+<div>
+<input type="search" id="artistText" placeholder="search with Artist"><button id="searchByArtist">Search by Artist</button>
+</div>
+<ul id="trackSearchArtist"></ul>
+<div>
+<input type="search" id="trackText" placeholder="search with Track"><button id="searchByTrack">Search by Track</button>
+    <ul id="trackSearchBody"> </ul>
+
+</div>
+</div>
+<div class="sidebar" style="display:inline;float:right;">
+    <h5>Similar Artists</h5>
+    <ul id="sidebarArtist">
+
+    </ul>
+
+</div>
+<script  src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+
+<script>
+    $('#searchByArtist').on('click',function(){
+        $.ajax({
+            url: '/searchArtist/'+$('#artistText').val(),
+            success : function(data){
+                var searchResult = data.searchResult;
+                var similarResults = data.similarArtists;
+                var builtHTML ="";
+                var builtHTML2 ="";
+                $('#trackSearchArtist').empty();
+                searchResult.forEach(function(element){
+                    builtHTML += '<li><a target="_blank" href="'+element.url+'" class="artistInfo">'+element.name+'</a></li>';
+                });
+               $('#trackSearchArtist').append(builtHTML);
+                $('#sidebarArtist').empty();
+                similarResults.forEach(function(element){
+                    builtHTML2 += '<li><a target="_blank" href="'+element.url+'" class="artistInfo">'+element.name+'</a></li>';
+                });
+                $('#sidebarArtist').append(builtHTML2);
+
+            },
+            error : function(){ }
+        })
+    });
+    $('#searchByTrack').on('click',function(){
+        $.ajax({
+            url: '/searchTrack/'+$('#trackText').val(),
+            success : function(data){
+                console.log(data);
+                $('#trackSearchBody').empty();
+                var builtHTML ="";
+                data.forEach(function(element){
+                    builtHTML += '<li><a target="_blank" href="'+element.url+'" class="artistInfo">'+element.name+'</a></li>';
+                });
+                $('#trackSearchBody').append(builtHTML);
+            },
+            error : function(errror){
+
+            }
+        })
+    })
+
+</script>
+
+</body>
+</html>
