@@ -3,7 +3,6 @@ var axios = require('axios');
 app.set('port', (process.env.PORT || 4000));
 
 app.get('/', function(req,res){
-    res.setHeader('Content-Type', 'text/html');
     res.sendFile('index.html',{root: __dirname });
 });
 
@@ -30,14 +29,6 @@ app.get('/searchTrack/:searchText', function(req,res){
 });
 
 
-
-
-
-
-
-
-
-
 app.get('/getArtist/:name', function(req,res){
     var name = req.params.name;
     console.log(name);
@@ -49,6 +40,10 @@ app.get('/getArtist/:name', function(req,res){
     })
 });
 
+app.use(function(req, res){
+    console.log(req.url);
+    res.sendFile(req.url,{root: __dirname });
+});
 
 function getArtistNameList(data){
     var names = [];

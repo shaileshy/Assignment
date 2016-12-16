@@ -22,16 +22,12 @@
     </style>
 </head>
 <body>
-<div style="display:inline;float:left;">
 <div>
-<input type="search" id="artistText" placeholder="search with Artist"><button id="searchByArtist">Search by Artist</button>
-</div>
-<ul id="trackSearchArtist"></ul>
-<div>
+    <!--<div>
 <input type="search" id="trackText" placeholder="search with Track"><button id="searchByTrack">Search by Track</button>
     <ul id="trackSearchBody"> </ul>
 
-</div>
+</div>-->
 </div>
 <div class="sidebar" style="display:inline;float:right;">
     <h5>Similar Artists</h5>
@@ -40,11 +36,23 @@
     </ul>
 
 </div>
+
+</div>
+
+<div>
+   <div class="testClass"></div>
+</div>
+<div class="testClass"></div>
+<div class="testClass"></div>
+<div class="testClass"></div>
+
 <script  src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
+<script src="widgetName.js"></script>
 
 <script>
+    $('.testClass').widget();
     $('#searchByArtist').on('click',function(){
         $.ajax({
             url: '/searchArtist/'+$('#artistText').val(),
