@@ -4,31 +4,49 @@
     <meta charset="UTF-8">
     <title></title>
     <style>
-
+       .artistSearch{
+           background-color: rgba(0, 0, 0, 0);
+           border-bottom-color:rgb(204, 204, 204);
+           border-bottom-left-radius:8px;
+           border-bottom-right-radius:8px;
+           border-bottom-style:solid;
+           border-bottom-width:2px;
+           border-image-outset:0px       ;
+           border-image-repeat:stretch       ;
+           border-image-slice:100%       ;
+           border-image-source:none       ;
+           border-image-width:1       ;
+           border-left-color:rgb(204, 204, 204)       ;
+           border-left-style:solid       ;
+           border-left-width:2px       ;
+           border-right-color:rgb(204, 204, 204)       ;
+           border-right-style:solid       ;
+           border-right-width:2px       ;
+           border-top-color:rgb(204, 204, 204)       ;
+           border-top-left-radius:8px;
+           border-top-right-radius:8px;
+           border-top-style:solid;
+           border-top-width:2px;
+           color: rgb(0, 0, 0);
+           cursor:auto;
+           display:inline-block;
+           font-family:Arial;
+           font-size:24px;
+       }
     </style>
 </head>
 <body>
-<div>
-    <!--<div>
-<input type="search" id="trackText" placeholder="search with Track"><button id="searchByTrack">Search by Track</button>
-    <ul id="trackSearchBody"> </ul>
+<div class="testClass"></div>
+<div class="testClass"></div>
 
-</div>-->
-</div>
-<div class="sidebar">
+
+<div class="sidebar" style="position: absolute;left:90%;top:0;">
     <h5>Similar Artists</h5>
-    <ul id="sidebarArtist">
-
-    </ul>
-
+    <ul id="sidebarArtist"> </ul>
 </div>
 
-</div>
 
-<div class="testClass"></div>
-<div class="testClass"></div>
-<div class="testClass"></div>
-<div class="testClass"></div>
+
 
 <script  src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -36,49 +54,7 @@
 <script src="widgetName.js"></script>
 
 <script>
-    $('.testClass').widget({hello:'hello'});
-    $('#searchByArtist').on('click',function(){
-        $.ajax({
-            url: '/searchArtist/'+$('#artistText').val(),
-            success : function(data){
-                var searchResult = data.searchResult;
-                var similarResults = data.similarArtists;
-                var builtHTML ="";
-                var builtHTML2 ="";
-                $('#trackSearchArtist').empty();
-                searchResult.forEach(function(element){
-                    builtHTML += '<li><a target="_blank" href="'+element.url+'" class="artistInfo">'+element.name+'</a></li>';
-                });
-               $('#trackSearchArtist').append(builtHTML);
-                $('#sidebarArtist').empty();
-                similarResults.forEach(function(element){
-                    builtHTML2 += '<li><a target="_blank" href="'+element.url+'" class="artistInfo">'+element.name+'</a></li>';
-                });
-                $('#sidebarArtist').append(builtHTML2);
-
-            },
-            error : function(){ }
-        })
-    });
-    $('#searchByTrack').on('click',function(){
-        $.ajax({
-            url: '/searchTrack/'+$('#trackText').val(),
-            success : function(data){
-                console.log(data);
-                $('#trackSearchBody').empty();
-                var builtHTML ="";
-                data.forEach(function(element){
-                    builtHTML += '<li><a target="_blank" href="'+element.url+'" class="artistInfo">'+element.name+'</a></li>';
-                });
-                $('#trackSearchBody').append(builtHTML);
-            },
-            error : function(errror){
-
-            }
-        })
-    })
-
+    $('.testClass').widget();
 </script>
-
 </body>
 </html>

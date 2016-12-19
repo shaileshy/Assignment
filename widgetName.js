@@ -15,22 +15,27 @@
        }
 
        function debounce(func, wait, immediate) {
-           var timeout;
-               var context = this, args = arguments;
-               var later = function() {
+           var timeout, result;
+           return function() {
+               var context = this, args = arguments, later, callNow;
+               later = function() {
                    timeout = null;
-                   if (!immediate) func.apply(context, args);
+                   if (!immediate) {
+                       result = func.apply(context, args);
+                   }
                };
-               var callNow = immediate && !timeout;
+               callNow = immediate && !timeout;
                clearTimeout(timeout);
                timeout = setTimeout(later, wait);
-               if (callNow) func.apply(context, args);
-
-       };
+               if (callNow) {
+                   result = func.apply(context, args);
+               }
+               return result;
+           };
+       }
 
 var searchFunction = function(event){
     var _this = $(event.target).val();
-    return debounce(function(){
        if(_this.length) {
                 $.ajax({
                     url : 'http://ws.audioscrobbler.com/2.0/?method=artist.search&artist='+_this+'&api_key=36e606575cf4709ed9254e103e9f94c4&format=json',
@@ -45,6 +50,11 @@ var searchFunction = function(event){
                                 url : 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist='+$(event.target).text()+'&api_key=36e606575cf4709ed9254e103e9f94c4&format=json',
                                 success: function(result){
                                     $(event.target).parents('.searchParent').find('.artistInfo').html(result.artist.bio.content);
+                                    var similarthtml = '';
+                                    result.artist.similar.artist.forEach(function(element,index){
+                                        similarthtml += '<li>'+element.name+'</li>';
+                                    });
+                                    $('#sidebarArtist').append(similarthtml);
                                 }
                             })
                         })
@@ -52,7 +62,6 @@ var searchFunction = function(event){
                     error : function(){ }
                 })
        }
-    },2500,true)
 };
        return this.each(function(index, element){
            $(element).append('<div class="searchParent">'+
@@ -61,7 +70,7 @@ var searchFunction = function(event){
                '<ul></ul>'+
                '</div><div class="artistInfo"></div>'+
                '</div>');
-           $(element).find('.artistSearch').on('keyup', searchFunction);
+           $(element).find('.artistSearch').on('keyup', debounce(searchFunction,250));
        });
    }
 })( jQuery, window, document );
