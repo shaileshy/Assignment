@@ -4,21 +4,7 @@
     <meta charset="UTF-8">
     <title></title>
     <style>
-        ul{
-           list-style-type: none;
-        }
-        ul li{
-        border: solid .5px navy;
-        background: aliceblue;
-        padding: 6px;
-        }
-        ul li a{
-            text-decoration: none;
-            color: darkgreen;
-        }
-        ul li a:visited{
-            color: yellowgreen;
-        }
+
     </style>
 </head>
 <body>
@@ -29,7 +15,7 @@
 
 </div>-->
 </div>
-<div class="sidebar" style="display:inline;float:right;">
+<div class="sidebar">
     <h5>Similar Artists</h5>
     <ul id="sidebarArtist">
 
@@ -39,9 +25,7 @@
 
 </div>
 
-<div>
-   <div class="testClass"></div>
-</div>
+<div class="testClass"></div>
 <div class="testClass"></div>
 <div class="testClass"></div>
 <div class="testClass"></div>
@@ -52,7 +36,7 @@
 <script src="widgetName.js"></script>
 
 <script>
-    $('.testClass').widget();
+    $('.testClass').widget({hello:'hello'});
     $('#searchByArtist').on('click',function(){
         $.ajax({
             url: '/searchArtist/'+$('#artistText').val(),
