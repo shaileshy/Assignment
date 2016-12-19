@@ -46,17 +46,21 @@ var searchFunction = function(event){
                          });
                         $(event.target).parent().find('ul').empty().append(html);
                         $('.searchDiv ul li').on('click',function(event){
+                            $(event.target).closest('.searchDiv').find('input[type="search"]').val($(event.target).text());
+
                             $.ajax({
                                 url : 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist='+$(event.target).text()+'&api_key=36e606575cf4709ed9254e103e9f94c4&format=json',
                                 success: function(result){
-                                    $(event.target).parents('.searchParent').find('.artistInfo').html(result.artist.bio.content);
+                                    $(event.target).parents('.searchParent').find('.artistInfo').html(result.artist.bio.content  || "No desciption available");
                                     var similarthtml = '';
                                     result.artist.similar.artist.forEach(function(element,index){
                                         similarthtml += '<li>'+element.name+'</li>';
                                     });
-                                    $('#sidebarArtist').append(similarthtml);
+                                    $(event.target).closest('.searchDiv').find('ul').empty();
+                                    $('#sidebarArtist').empty().append(similarthtml);
                                 }
                             })
+
                         })
                     },
                     error : function(){ }
@@ -70,7 +74,7 @@ var searchFunction = function(event){
                '<ul></ul>'+
                '</div><div class="artistInfo"></div>'+
                '</div>');
-           $(element).find('.artistSearch').on('keyup', debounce(searchFunction,250));
+           $(element).find('.artistSearch').on('keyup', debounce(searchFunction,300,false));
        });
    }
 })( jQuery, window, document );
