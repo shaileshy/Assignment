@@ -2,81 +2,84 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
-    <style>
-       .artistSearch{
-           background-color: rgba(0, 0, 0, 0);
-           border-bottom-color:rgb(204, 204, 204);
-           border-bottom-left-radius:8px;
-           border-bottom-right-radius:8px;
-           border-bottom-style:solid;
-           border-bottom-width:2px;
-           border-image-outset:0px       ;
-           border-image-repeat:stretch       ;
-           border-image-slice:100%       ;
-           border-image-source:none       ;
-           border-image-width:1       ;
-           border-left-color:rgb(204, 204, 204)       ;
-           border-left-style:solid       ;
-           border-left-width:2px       ;
-           border-right-color:rgb(204, 204, 204)       ;
-           border-right-style:solid       ;
-           border-right-width:2px       ;
-           border-top-color:rgb(204, 204, 204)       ;
-           border-top-left-radius:8px;
-           border-top-right-radius:8px;
-           border-top-style:solid;
-           border-top-width:2px;
-           color: rgb(0, 0, 0);
-           cursor:auto;
-           display:inline-block;
-           font-family:Arial;
-           font-size:24px;
-       }
-        ul{
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-        ul li{
-            padding:10px;
-            background: honeydew;
-        }
-        .searchDiv{
-            width:18%;
-            display: inline-block;
-            float: left;
-        }
-        .artistInfo{
-            width: 60%;
-            display: inline-block;
-            float: left;
-            margin-left:20px;
-            background: teal;
-        }
-        .testClass{
-            min-width: 100%;
-            float:left;
-        }
-    </style>
+    <title>search</title>
+    <link rel="stylesheet" href="index.css">
+
 </head>
 <body>
-<div class="testClass"></div>
-<div class="testClass"></div>
-
-
-<div class="sidebar" style="position: absolute;left:90%;top:0;">
-    <h5>Similar Artists</h5>
-    <ul id="sidebarArtist"> </ul>
+<div class="testClass">
+<input type="text" id ="textbox" >
 </div>
+
+<div class="">
+    <button id="goButton"  class="buttonStyle">Artist</button>
+    <button id="track" class="buttonStyle">Track</button>
+    <ul></ul>
+
+
+</div>
+
 
 <script  src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
-<script src="widgetName.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#goButton').click(function(){
+            $('ul').empty();
+        });
+        $('#track').click(function(){
+            $('ul').empty();
+        });
+
+        $('#goButton').click(function() {
+            var _this = $('#textbox').val();
+            if (_this.length) {
+                $.ajax({
+                    url: 'http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=' + _this + '&api_key=36e606575cf4709ed9254e103e9f94c4&format=json',
+                    success: function (response) {
+                        var html = "";
+                        response.results.artistmatches.artist.forEach(function (element, index) {
+
+                            html = html+ '<li>' + '<b>' + "Name: " +'</b>' + element.name+ " " +  '<b>' + ", Link: " +'</b>' + '<a href="'+element.url+ '">' + element.url+'</a>'+'<li>';
+
+                        });
+
+                        $('ul').append(html);
+
+
+                    }
+                });
+            }
+        });
+
+        $('#track').click(function() {
+            var _this = $('#textbox').val();
+            if (_this.length) {
+                $.ajax({
+                        url:'http://ws.audioscrobbler.com/2.0/?method=track.search&track='+ _this + '&api_key=36e606575cf4709ed9254e103e9f94c4&format=json',
+                    success: function (response) {
+                        var html = "";
+                        response.results.trackmatches.track.forEach(function (element, index) {
+                            console.log(html);
+
+                           html = html+ '<li>' + '<b>' + "Track: " +'</b>' + element.name + " " +   '<b>' + ", Artist: " +'</b>'  + element.artist +'<li>';
+
+                        });
+
+                        $('ul').append(html);
+
+
+                    }
+                });
+            }
+        });
+    });
+</script>
+<!--<script src="widgetName.js"></script>
 
 <script>
     $('.testClass').widget();
-</script>
+</script>-->
 </body>
 </html>
